@@ -34,3 +34,9 @@ For real data, implement a `LiveSource` conforming to this interface, validate i
 ## Assets and accessibility
 
 Three.js is bundled locally. Font: Adwaita Sans (OFL), self-hosted in `public/fonts/`. GLB textures are embedded. Controls use native buttons, checkboxes and range inputs with visible keyboard focus. Layout places sensors below the canvas on mobile. Reduced motion disables decorative loading animation; the 3D model has no automatic camera movement or cat animation.
+
+## GitHub Pages
+
+The `Deploy simulator to GitHub Pages` workflow tests and builds this app on every push to `main`, then publishes `dist/`. In the repository's **Settings → Pages**, select **GitHub Actions** as the build source. The first deployment then produces the public site URL.
+
+Relative asset URLs support the `/cat-house-simulator/` repository path while keeping `npm run dev` working at the local root. The model and font are bundled; no credentials or live sensor endpoint are needed by the published app.
