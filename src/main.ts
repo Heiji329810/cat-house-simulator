@@ -37,8 +37,6 @@ function setView(view: ViewMode) {
     element(`${mode}-view`).setAttribute('aria-pressed', String(mode === view));
   });
   const interior = view === 'interior';
-  element('view-label').textContent = interior ? 'Inside, with Cici.' : 'Room to explore.';
-  element('view-help').textContent = interior ? 'Fixed lens position · Simulated interior view' : 'Drag to orbit · Scroll to zoom · Click a component';
   element('camera-notice').hidden = !interior;
   element<HTMLInputElement>('cutaway-toggle').disabled = interior;
   element<HTMLInputElement>('explode-toggle').disabled = interior;

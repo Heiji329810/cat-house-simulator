@@ -42,7 +42,7 @@ export class HouseScene {
     this.renderer.setClearColor(0x242a29);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.2;
+    this.renderer.toneMappingExposure = 0.95;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.domElement.setAttribute('aria-label', 'Interactive Cat House 3D model. Drag to orbit, scroll to zoom.');
@@ -52,14 +52,14 @@ export class HouseScene {
     const environment = new RoomEnvironment();
     this.scene.environment = pmrem.fromScene(environment, 0.04).texture;
     environment.dispose(); pmrem.dispose();
-    this.scene.add(new THREE.HemisphereLight(0xe5eee4, 0x4c4943, 2));
-    const key = new THREE.DirectionalLight(0xffeed6, 4);
+    this.scene.add(new THREE.HemisphereLight(0xe5eee4, 0x4c4943, 0.9));
+    const key = new THREE.DirectionalLight(0xffeed6, 2.2);
     key.position.set(1.4, 2.1, 1.5); key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = -1.4; key.shadow.camera.right = 1.4;
     key.shadow.camera.top = 1.4; key.shadow.camera.bottom = -1.4; key.shadow.bias = -0.0004;
     this.scene.add(key);
-    const fill = new THREE.DirectionalLight(0xd7e7ff, 1.2); fill.position.set(-1, 1, -1); this.scene.add(fill);
-    const inside = new THREE.PointLight(0xffebcc, 0.6, 1.5, 1.5); inside.position.set(0, 0.35, 0); this.scene.add(inside);
+    const fill = new THREE.DirectionalLight(0xd7e7ff, 0.65); fill.position.set(-1, 1, -1); this.scene.add(fill);
+    const inside = new THREE.PointLight(0xffebcc, 0.075, 1.5, 1.5); inside.position.set(0, 0.35, 0); this.scene.add(inside);
     const ground = new THREE.Mesh(new THREE.CircleGeometry(3, 96), new THREE.MeshStandardMaterial({ color: 0x242a29, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2; ground.position.y = -0.023; ground.receiveShadow = true; this.scene.add(ground);
     this.highlight.visible = false; this.scene.add(this.highlight);
@@ -98,7 +98,51 @@ export class HouseScene {
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         const clonedMaterials = materials.map(material => {
           const clone = material.clone();
-          if (clone instanceof THREE.MeshStandardMaterial) { clone.envMapIntensity = 0.55; clone.side = THREE.DoubleSide; }
+          if (clone instanceof THREE.MeshStandardMaterial) {
+            clone.envMapIntensity = 0.4;
+            clone.side = THREE.DoubleSide;
+            if (material.name === 'Walnut finish over insulation') {
+              // The export assigned its color image as a normal map. It is not
+              // surface-normal data and produced deep ripples and white glare.
+              clone.normalMap = null;
+              // The photographs show fine printed grain rather than prominent
+              // ridges. Retain the embedded texture at a quieter contrast.
+              clone.onBeforeCompile = shader => {
+                shader.fragmentShader = shader.fragmentShader.replace(
+                  '#include <map_fragment>',
+                  '#include <map_fragment>\n' +
+                  'diffuseColor.rgb = mix(diffuse * vec3(0.33, 0.175, 0.071), diffuseColor.rgb, 0.28);'
+                );
+              };
+              clone.customProgramCacheKey = () => 'cat-house-satin-wood-v1';
+              clone.roughness = 0.67;
+              clone.metalness = 0;
+              // The reference has a warmer roof and darker wrapped wall panels.
+              const tint = isRoof(object.name) ? [0.72, 0.57, 0.40] : [0.42, 0.30, 0.21];
+              clone.color.setRGB(tint[0], tint[1], tint[2]);
+              if (clone instanceof THREE.MeshPhysicalMaterial) {
+                clone.clearcoat = 0.06;
+                clone.clearcoatRoughness = 0.6;
+              }
+              if (clone.map) {
+                clone.map = clone.map.clone();
+                clone.map.anisotropy = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+                if (/left insulated wall|right insulated wall/i.test(object.name.replaceAll('_', ' '))) {
+                  clone.map.center.set(0.5, 0.5);
+                  clone.map.rotation = Math.PI / 2;
+                }
+                clone.map.needsUpdate = true;
+              }
+            } else if (clone instanceof THREE.MeshPhysicalMaterial &&
+              /Clear protective acrylic|Clear entrance flap/.test(material.name)) {
+              // Thin clear sheets should not add an opaque milky layer to the
+              // synthetic interior camera or hide the wood behind the flap.
+              clone.transmission = 0;
+              clone.opacity = material.name === 'Clear entrance flap' ? 0.10 : 0.045;
+              clone.roughness = 0.24;
+              clone.depthWrite = false;
+            }
+          }
           return clone;
         });
         object.material = Array.isArray(object.material) ? clonedMaterials : clonedMaterials[0];

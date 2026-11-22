@@ -75,7 +75,7 @@ Leaf marks active controls and focus. Warm heat color identifies the heater read
 
 ## Typography
 
-Adwaita Sans is self-hosted and used throughout. Headings use moderate weight and compact tracking. Sensor values use tabular numerals. The view heading is the largest text; component headings stay compact. Small metadata uses 12–13px and regular control labels use 14px.
+Adwaita Sans is self-hosted and used throughout. Headings use moderate weight and compact tracking. Sensor values use tabular numerals. The view controls sit directly above the model, without a heading or subtitle overlay; component headings stay compact. Small metadata uses 12–13px and regular control labels use 14px.
 
 ## Layout
 
@@ -102,3 +102,7 @@ View controls are standard grouped buttons with `aria-pressed`; active state use
 - Don't add automatic camera motion.
 
 This record describes implemented source. Parent-task browser review remains the authority on final rendered fit and framing; no visual approval is implied by this file.
+
+## Photo reference material finish
+
+The browser corrects the exported wood material to match the saved Cat House photos: a warmer roof, darker brown wall panels, subdued grain and a satin finish. The source color image is excluded from the normal-map slot because it contains color rather than surface normals. Side-wall grain follows the panel length. Thin acrylic remains clear in the synthetic interior camera. Softer lighting keeps the wood and equipment readable without sharp white glare.

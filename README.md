@@ -40,3 +40,7 @@ Three.js is bundled locally. Font: Adwaita Sans (OFL), self-hosted in `public/fo
 The `Deploy simulator to GitHub Pages` workflow tests and builds this app on every push to `main`, then publishes `dist/`. In the repository's **Settings → Pages**, select **GitHub Actions** as the build source. The first deployment then produces the public site URL.
 
 Relative asset URLs support the `/cat-house-simulator/` repository path while keeping `npm run dev` working at the local root. The model and font are bundled; no credentials or live sensor endpoint are needed by the published app.
+
+## Material reference
+
+`src/scene.ts` applies photo-guided browser material corrections to the preserved CAD asset: darker satin wood, warmer roof, quieter grain with the side panels oriented lengthwise, clear acrylic and softer illumination. The exported color texture is not valid normal data, so its normal-map assignment is disabled at load time. Geometry, component names and the physical camera position are preserved.
