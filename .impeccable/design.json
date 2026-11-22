@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-22T03:04:30.830288+00:00",
+  "title": "Design System: Cici / Cat House",
+  "extensions": {
+    "colorMeta": {
+      "leaf": {
+        "role": "primary",
+        "displayName": "Leaf",
+        "canonical": "#c0ddbb"
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#181d1c"
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "canonical": "#202724"
+      },
+      "stage": {
+        "role": "neutral",
+        "displayName": "Stage",
+        "canonical": "#242a29"
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Foreground",
+        "canonical": "#edf1ed"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "#a9b5af"
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "canonical": "#37403b"
+      },
+      "heat": {
+        "role": "secondary",
+        "displayName": "Heat",
+        "canonical": "#e5be8f"
+      }
+    },
+    "shadows": [
+      {
+        "name": "component-details",
+        "value": "0 12px 30px #111a1480",
+        "purpose": "Selected component details only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "switch-state",
+        "value": "transform .16s ease-out",
+        "purpose": "Cat presence switch. Disabled for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px"
+      },
+      {
+        "name": "compact",
+        "value": "1100px"
+      },
+      {
+        "name": "stacked",
+        "value": "800px"
+      },
+      {
+        "name": "phone",
+        "value": "520px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Active camera view",
+      "kind": "nav",
+      "refersTo": "view-active",
+      "description": "Selected view in the grouped camera controls.",
+      "html": "<button class=\"ds-view\" aria-pressed=\"true\">Global view</button>",
+      "css": ".ds-view{font:550 14px Adwaita,Arial,sans-serif;background:#e2ebdc;color:#202a21;border:0;border-radius:6px;padding:0 16px;min-height:40px;cursor:pointer}.ds-view:hover{background:#cbdcc5}.ds-view:focus-visible{outline:2px solid #c0ddbb;outline-offset:4px}"
+    },
+    {
+      "name": "Quiet action",
+      "kind": "button",
+      "refersTo": "quiet-button",
+      "description": "Secondary action without visual competition with the stage.",
+      "html": "<button class=\"ds-quiet\">Reset view</button>",
+      "css": ".ds-quiet{font:550 14px Adwaita,Arial,sans-serif;background:#242b27;color:#d4dfd5;border:0;border-radius:6px;padding:0 10px;min-height:40px;cursor:pointer}.ds-quiet:hover{background:#36443b}.ds-quiet:focus-visible{outline:2px solid #c0ddbb;outline-offset:4px}"
+    },
+    {
+      "name": "Simulation badge",
+      "kind": "chip",
+      "description": "Persistent disclosure of synthetic readings.",
+      "html": "<span class=\"ds-badge\">Simulation</span>",
+      "css": ".ds-badge{display:inline-block;font:400 13px Adwaita,Arial,sans-serif;border:1px solid #52604d;color:#c9dfbd;border-radius:30px;padding:5px 11px}"
+    },
+    {
+      "name": "Visibility checkbox",
+      "kind": "input",
+      "description": "Native boolean model control.",
+      "html": "<label class=\"ds-check\"><input type=\"checkbox\" checked> Roof</label>",
+      "css": ".ds-check{display:inline-flex;align-items:center;gap:7px;color:#edf1ed;font:400 14px Adwaita,Arial,sans-serif;padding:10px 9px}.ds-check input{accent-color:#c0ddbb;width:15px;height:15px}.ds-check input:focus-visible{outline:2px solid #c0ddbb;outline-offset:4px}"
+    },
+    {
+      "name": "Temperature range",
+      "kind": "input",
+      "description": "A labeled temperature simulation input.",
+      "html": "<label class=\"ds-range\">Temperature<input aria-label=\"Simulated temperature\" type=\"range\" min=\"5\" max=\"30\" value=\"18\"></label>",
+      "css": ".ds-range{display:block;color:#edf1ed;font:400 14px Adwaita,Arial,sans-serif}.ds-range input{display:block;width:100%;accent-color:#c0ddbb;margin-top:15px}.ds-range input:focus-visible{outline:2px solid #c0ddbb;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Brief-pinned graphite model viewer",
+    "overview": "The brief pins a modern dark graphite interface that lets the actual house lead. The shell uses green-tinted graphite surfaces, readable restrained type, and a pale leaf accent for selection and simulation controls. The model supplies the material and color richness.",
+    "keyCharacteristics": [
+      "A dominant 3D stage with calm surrounding controls.",
+      "Flat tonal surfaces and compact familiar inputs.",
+      "Clear simulation labeling and measured values."
+    ],
+    "rules": [
+      {
+        "name": "The State Color Rule",
+        "body": "Color reinforces a text label; it never carries state alone.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve readable source and simulation labels.",
+      "Do keep the textured model as the primary visual material.",
+      "Do use authored SVG strokes for simple interface icons."
+    ],
+    "donts": [
+      "Don\u2019t communicate heater or occupancy state with color alone.",
+      "Don\u2019t add automatic camera motion."
+    ]
+  }
+}

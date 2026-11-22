@@ -1,0 +1,26 @@
+{
+  "units": "metres",
+  "body_dimensions_m": [
+    0.45,
+    0.8
+  ],
+  "bbox_m": [
+    0.53,
+    0.594,
+    0.92
+  ],
+  "camera_position": [
+    0.031,
+    0.177,
+    -0.319
+  ],
+  "camera_target": [
+    0,
+    0.13,
+    0.2
+  ],
+  "node_count_cad": 82,
+  "cat_root": "Cat_Root",
+  "data_mode": "simulation only",
+  "source": "Cici photo-based SolidCraft reconstruction; component dimensions approximate"
+}

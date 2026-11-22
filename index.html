@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#181d1c" />
+    <meta name="description" content="Explore Cici's Cat House in 3D with a browser-local sensor simulation." />
+    <title>Cici / Cat House</title>
+  </head>
+  <body>
+    <main id="app">
+      <header class="app-header">
+        <a class="brand" href="./" aria-label="Cici Cat House home">Cici <span>/</span> Cat House</a>
+        <span class="simulation-badge"><span class="status-dot"></span>Simulation</span>
+        <span class="header-note">A little space. A closer look.</span>
+      </header>
+      <div class="workspace">
+        <section class="viewer" aria-label="Cat House model viewer">
+          <div class="viewer-toolbar">
+            <div class="view-tabs" role="group" aria-label="Camera view">
+              <button id="orbit-view" class="active" aria-pressed="true">Global view</button>
+              <button id="interior-view" aria-pressed="false">Interior camera</button>
+            </div>
+            <button id="reset-view" class="quiet-button" title="Reset current view"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a8 8 0 1 1 2 6M4 5v6h6"/></svg><span>Reset view</span></button>
+          </div>
+          <div id="scene" class="scene"></div>
+          <div class="view-caption"><h1 id="view-label">Room to explore.</h1><p id="view-help">Drag to orbit · Scroll to zoom · Click a component</p></div>
+          <div id="model-status" class="model-status" role="status"><span class="loading-mark"></span><p>Loading the Cat House model…</p></div>
+          <div id="model-error" class="model-error" hidden role="alert"><h2>The model couldn’t load.</h2><p id="error-detail"></p><button id="retry-model">Retry model</button></div>
+          <div id="selection" class="selection" hidden><div><h2 id="selection-name"></h2><button id="close-selection" class="icon-button" aria-label="Close component details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p id="selection-description"></p></div>
+          <div class="viewer-bottom">
+            <div class="model-options" aria-label="Model visibility">
+              <label class="check-control"><input id="roof-toggle" type="checkbox" checked><span>Roof</span></label>
+              <label class="check-control"><input id="cutaway-toggle" type="checkbox"><span>Cutaway</span></label>
+              <label class="check-control"><input id="explode-toggle" type="checkbox"><span>Exploded</span></label>
+            </div>
+            <span class="dimensions">450 W × 800 D mm</span>
+          </div>
+          <p id="camera-notice" class="camera-notice" hidden>Synthetic 3D view from the interior camera position. No live video.</p>
+        </section>
+        <aside class="sensor-panel" aria-label="Simulated sensors and controls">
+          <div class="panel-heading"><h2>Inside the house</h2><span id="presence-tag" class="presence-tag">Cat present</span></div>
+          <p class="panel-intro">A local simulation of Cici’s space.</p>
+          <dl class="sensor-list">
+            <div><dt>Temperature</dt><dd><span id="temperature">18.0</span><span class="unit">°C</span></dd></div>
+            <div><dt>Humidity</dt><dd><span id="humidity">54.0</span><span class="unit">%</span></dd></div>
+            <div><dt>Ultrasonic distance</dt><dd><span id="distance">24.0</span><span class="unit">cm</span></dd></div>
+            <div><dt>Camera cat detection</dt><dd id="confidence">97%</dd></div>
+            <div class="heater-row"><dt><span id="heater-indicator" class="heater-indicator"></span>Heater</dt><dd id="heater">On</dd></div>
+          </dl>
+          <p class="heater-rule">Demo rule: heat below 20 °C when the cat is present.</p>
+          <div class="simulation-controls">
+            <div class="section-title"><h3>Try a scenario</h3><button id="play-toggle" class="text-button" aria-pressed="true">Pause demo</button></div>
+            <div class="presets" role="group" aria-label="Simulation presets"><button data-preset="cold">Cold night</button><button data-preset="comfortable">Comfortable</button><button data-preset="empty">Empty house</button></div>
+            <label class="range-label" for="temperature-control"><span>Temperature</span><output id="temperature-output" for="temperature-control">18 °C</output></label>
+            <input id="temperature-control" type="range" min="5" max="30" step="0.5" value="18" aria-label="Simulated temperature in degrees Celsius">
+            <label class="toggle-control" for="cat-toggle"><span>Cat present</span><span class="switch"><input id="cat-toggle" type="checkbox" checked><span class="switch-track"></span></span></label>
+          </div>
+          <div class="simulation-note"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg><p>All readings and detection are simulated. Real sensor data comes next.</p></div>
+          <footer class="panel-footer"><span id="demo-state">Demo running</span><time id="reading-time">—</time></footer>
+        </aside>
+      </div>
+      <footer class="app-footer"><span>Built from the Cat House CAD assembly</span><span>3D model · Simulated sensors · Synthetic camera</span></footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
